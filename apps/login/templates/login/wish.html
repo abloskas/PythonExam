@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Item: {{item.name}}</title>
+</head>
+<body>
+    <div class='wrapper'>
+        <div class="header">
+            <a href="/wish_items/success" class='right1'>Home</a>
+            <a href="/logout">Logout</a>  
+        </div> 
+        <h1>{{item.name}}</h1>
+        <p>Users who added this product/item under their wish list:</p>
+            {% for item in items %}
+            <!-- {{user.first_name}} -->
+            <p>{{item.users.first_name}}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

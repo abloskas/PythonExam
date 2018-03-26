@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>My Wish List</title>
+    {% load static %}
+<!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static 'login/style.css' %}" media="screen" title="no title"  charset="utf-8">
+<!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->    
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <a href="/logout">Logout</a>  
+        </div> 
+        <h1>Hello, {{user.first_name}}</h1>
+        <h3>Your Wish List:</h3>
+        <div class="table">
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Added by</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for item in items %}
+                    <tr>
+                        <td><a href="/wish_items/{{item.id}}">{{item.name}}</a></td>
+                        <td>{{item.users.first_name}}</td>
+                        <td>{{item.created_at}}</td>
+                        {% if request.session.id == item.id %}
+                        <td><a href="/wish_items/{{item.id}}/delete">Delete</a></td>
+                        {% endif %}
+                        {% if request.session.id != item.id %}
+                        <td><a href="/wish_items/{{item.id}}/delete">Remove from your wishlist</a></td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                </table>
+                
+        </div>
+        <h3>Other Users' Wishlist:</h3>
+        <div class="table">
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Added by</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for item in items %}
+                    <tr>
+                        <td><a href="/wish_items/{{item.id}}">{{item.name}}</a></td>
+                        <td>{{item.users.first_name}}</td>
+                        <td>{{item.created_at}}</td>
+                        {% if request.session.id != item.id %}
+                        <td><a href="">Add to your wishlist</a></td>
+                        <!-- /wish_items/{{item.id}}/add -->
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                </table>
+                
+        </div>
+        <br>
+        <br>
+        <a href="/wish_items/create">Add Item</a>
+    </div> 
+</body>
+</html>
